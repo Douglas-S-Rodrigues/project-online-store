@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { getCategories, getProductsFromTerms } from '../services/api';
-
 import ProductCard from '../components/ProductCard';
 
 class Home extends React.Component {
@@ -53,7 +51,6 @@ class Home extends React.Component {
 
     return (
       <div>
-
         <div>
           <ul>
             {
@@ -61,9 +58,13 @@ class Home extends React.Component {
                 <li key={ category.id }>
                   <label
                     data-testid="category"
-                    htmlFor="categoryButton"
+                    htmlFor={ category.id }
                   >
-                    <input type="radio" id="categoryButton" />
+                    <input
+                      type="radio"
+                      id={ category.id }
+                      name="categoryButton"
+                    />
                     { category.name }
                   </label>
                 </li>
