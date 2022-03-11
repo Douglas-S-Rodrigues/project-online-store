@@ -1,5 +1,7 @@
 import React from 'react';
-import { getProductsFromTerms } from '../services/api';
+import { Link } from 'react-router-dom';
+
+import { getCategories, getProductsFromTerms } from '../services/api';
 
 import ProductCard from '../components/ProductCard';
 
@@ -11,10 +13,15 @@ class Home extends React.Component {
     this.productsRequest = this.productsRequest.bind(this);
 
     this.state = {
+      categories: [],
       product: '',
       products: [],
       request: false,
     };
+  }
+
+  componentDidMount() {
+    this.receptCategories();
   }
 
   handleChange({ target }) {
@@ -26,6 +33,12 @@ class Home extends React.Component {
     });
   }
 
+  receptCategories = async () => {
+    this.setState({
+      categories: await getCategories(),
+    });
+  };
+
   async productsRequest(product) {
     const products = await getProductsFromTerms(product);
 
@@ -36,10 +49,33 @@ class Home extends React.Component {
   }
 
   render() {
-    const { product, products, request } = this.state;
+    const { categories, product, products, request } = this.state;
 
     return (
       <div>
+
+        <div>
+          <ul>
+            {
+              categories.map((category) => (
+                <li key={ category.id }>
+                  <label
+                    data-testid="category"
+                    htmlFor="categoryButton"
+                  >
+                    <input type="radio" id="categoryButton" />
+                    { category.name }
+                  </label>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <Link to="/Cart" data-testid="shopping-cart-button">
+          <button type="button"> Carrinho </button>
+        </Link>
+
         <form>
           <input
             type="text"
@@ -84,5 +120,3 @@ class Home extends React.Component {
 }
 
 export default Home;
-
-// test //
