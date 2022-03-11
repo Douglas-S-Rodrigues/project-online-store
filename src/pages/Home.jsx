@@ -33,7 +33,11 @@ class Home extends React.Component {
                     data-testid="category"
                     htmlFor="categoryButton"
                   >
-                    <input type="radio" id="categoryButton" />
+                    <input
+                      type="radio"
+                      id="categoryButton"
+                      name="categoryButton"
+                    />
                     { category.name }
                   </label>
                 </li>
