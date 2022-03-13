@@ -19,6 +19,7 @@ class CardList extends React.Component {
                     imagem={ prod.thumbnail }
                     title={ prod.title }
                     price={ prod.price }
+                    prodId={ prod.id }
                   />
                 )) }
               </section>

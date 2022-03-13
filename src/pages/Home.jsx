@@ -62,7 +62,7 @@ class Home extends React.Component {
       <>
         <nav>
           <h2>Grupo 29 - Online Store</h2>
-          <Link to="/Cart" data-testid="shopping-cart-button">
+          <Link to="/cart" data-testid="shopping-cart-button">
             <button className="cart" type="button">
               Carrinho
             </button>
