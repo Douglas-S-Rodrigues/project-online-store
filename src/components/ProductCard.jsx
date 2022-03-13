@@ -6,8 +6,8 @@ class ProductCard extends React.Component {
     const { title, imagem, price } = this.props;
 
     return (
-      <div data-testid="product">
-        <img scr={ imagem } alt={ title } />
+      <div className="card" data-testid="product">
+        <img src={ imagem } alt={ title } />
         <p>{ title }</p>
         <p>{ `R$ ${price}` }</p>
       </div>

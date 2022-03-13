@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getCategories, getProductsFromTerms } from '../services/api';
-import ProductCard from '../components/ProductCard';
+import {
+  getCategories,
+  getProductsFromCategoryAndQuery,
+} from '../services/api';
+
+import CategoryList from '../components/CategoryList';
+import Search from '../components/Search';
+import CardList from '../components/CardList';
 
 class Home extends React.Component {
   constructor() {
@@ -37,85 +43,51 @@ class Home extends React.Component {
     });
   };
 
-  async productsRequest(product) {
-    const products = await getProductsFromTerms(product);
+  async productsRequest(categoryId, queryProduct) {
+    const { results } = await getProductsFromCategoryAndQuery(
+      categoryId,
+      queryProduct,
+    );
 
     this.setState({
-      products: [...products],
+      products: [...results],
       request: true,
     });
   }
 
   render() {
-    const { categories, product, products, request } = this.state;
+    const { categoryId, categories, product, products, request } = this.state;
 
     return (
-      <div>
-        <div>
-          <ul>
-            {
-              categories.map((category) => (
-                <li key={ category.id }>
-                  <label
-                    data-testid="category"
-                    htmlFor={ category.id }
-                  >
-                    <input
-                      type="radio"
-                      id={ category.id }
-                      name="categoryButton"
-                    />
-                    { category.name }
-                  </label>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
+      <>
+        <nav>
+          <h2>Grupo 29 - Online Store</h2>
+          <Link to="/Cart" data-testid="shopping-cart-button">
+            <button className="cart" type="button">
+              Carrinho
+            </button>
+          </Link>
+        </nav>
 
-        <Link to="/Cart" data-testid="shopping-cart-button">
-          <button type="button"> Carrinho </button>
-        </Link>
+        <header>
+          <Search
+            product={ product }
+            categoryId={ categoryId }
+            handleChange={ this.handleChange }
+            productsRequest={ this.productsRequest }
+          />
+        </header>
 
-        <form>
-          <input
-            type="text"
-            name="product"
-            data-testid="query-input"
-            value={ product }
-            onChange={ this.handleChange }
+        <main>
+          <CategoryList
+            product={ product }
+            categories={ categories }
+            productsRequest={ this.productsRequest }
           />
 
-          <button
-            type="button"
-            data-testid="query-button"
-            onClick={ () => this.productsRequest(product) }
-          >
-            buscar
-          </button>
-        </form>
-        <p
-          data-testid="home-initial-message"
-        >
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </p>
-        {!request ? '' : (
-          <div>
-            { products.length > 0 ? (
-              <section>
-                { products.map((prod) => (
-                  <ProductCard
-                    key={ prod.id }
-                    imagem={ prod.thumbnail }
-                    title={ prod.title }
-                    price={ prod.price }
-                  />
-                )) }
-              </section>
-            ) : <h1>Nenhum produto foi encontrado</h1>}
-          </div>
-        )}
-      </div>
+          <CardList products={ products } request={ request } />
+        </main>
+      </>
     );
   }
 }
