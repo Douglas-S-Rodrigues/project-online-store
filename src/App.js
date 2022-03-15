@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import './App.css';
 import Cart from './pages/Cart';
 import Details from './pages/Details';
+import { getProductDetails } from './services/api';
 
 class App extends React.Component {
   constructor() {
@@ -18,7 +19,7 @@ class App extends React.Component {
   handleAddItem = async (proId) => {
     const { item } = this.state;
     this.setState({
-      item: [...item, proId],
+      item: [...item, await getProductDetails(proId)],
     });
   }
 
