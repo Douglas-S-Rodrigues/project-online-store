@@ -35,6 +35,7 @@ class Details extends React.Component {
 
     return (
       <div>
+
         <nav>
           <h2>Grupo 29 - Online Store</h2>
           <Link to="/cart" data-testid="shopping-cart-button">
