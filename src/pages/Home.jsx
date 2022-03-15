@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
   getCategories,
@@ -57,6 +58,7 @@ class Home extends React.Component {
 
   render() {
     const { categoryId, categories, product, products, request } = this.state;
+    const { handleAddItem } = this.props;
 
     return (
       <>
@@ -85,11 +87,19 @@ class Home extends React.Component {
             productsRequest={ this.productsRequest }
           />
 
-          <CardList products={ products } request={ request } />
+          <CardList
+            products={ products }
+            request={ request }
+            handleAddItem={ handleAddItem }
+          />
         </main>
       </>
     );
   }
 }
+
+Home.propTypes = {
+  handleAddItem: PropTypes.func.isRequired,
+};
 
 export default Home;

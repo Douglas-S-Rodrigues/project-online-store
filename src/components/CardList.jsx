@@ -5,7 +5,7 @@ import ProductCard from './ProductCard';
 
 class CardList extends React.Component {
   render() {
-    const { products, request } = this.props;
+    const { products, request, handleAddItem } = this.props;
 
     return (
       <div className="card-list">
@@ -20,6 +20,7 @@ class CardList extends React.Component {
                     title={ prod.title }
                     price={ prod.price }
                     prodId={ prod.id }
+                    addItem={ handleAddItem }
                   />
                 )) }
               </section>
@@ -32,6 +33,7 @@ class CardList extends React.Component {
 }
 
 CardList.propTypes = {
+  handleAddItem: PropTypes.func.isRequired,
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
   request: PropTypes.bool.isRequired,
 };
