@@ -33,7 +33,16 @@ class App extends React.Component {
             path="/"
             render={ () => <Home handleAddItem={ this.handleAddItem } /> }
           />
-          <Route exact path="/details/:id" component={ Details } />
+          <Route
+            exact
+            path="/details/:id"
+            render={ (routeProps) => (
+              <Details
+                { ...routeProps }
+                handleAddItem={ this.handleAddItem }
+                ttItems={ item.length }
+              />) }
+          />
           <Route
             exact
             path="/cart"
